@@ -3,40 +3,45 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { deleteTodos, getTodos, updateTodos } from '../Redux/todo/action'
 import { Text,Checkbox } from '@chakra-ui/react'
+import { EditIcon,DeleteIcon ,CheckCircleIcon} from '@chakra-ui/icons'
+import Edit from './Edit'
+
 
 const TodoItem = ({...el}) => {
     const[title,setTitle] =useState(el.title)
+    const[state,setState]=useState(false)
    const dispatch=useDispatch()
-   const[state,setState] =useState(false)
-   useEffect(()=>{
-   dispatch(getTodos())
-   console.log("el",el)
-   },[state])
-   
+  console.log("el",el)
   return (
     <div >
-        <Box marginTop={"20px"}>
-        <InputGroup >
-      <Input  color={"white"} value={title} onChange={(e)=>setTitle(e.target.value)} onKeyDown={(e)=>{
-        if(e.key==="Enter")
-        {
-            dispatch(updateTodos({...el,title}))
-        }
-      }}/>
-      <Button colorScheme={"red"} onClick={()=>
-        {dispatch(deleteTodos(el.id))
-        setState((prev)=>!prev);}}>Delete</Button>
-        </InputGroup>
-        <Text color="white">{el.status? "Completed" :"Pending"}</Text>
-        {/* <Checkbox type="checkbox" name={`status${el.id}`} colorScheme='green' isChecked={el.status? true : false} color="white" onChange={()=>dispatch(updateTodos(el))}>
-    Checkbox
-  </Checkbox> */}
-  <Checkbox isInvalid color="white" onChange={()=>
-    {dispatch(updateTodos(el));
-    dispatch(getTodos());}} >Checkbox</Checkbox>
+        <Box marginTop={"20px"} >
+          <Box display={"flex"} justifyContent={"space-between"}>
+          <Text color="white" textDecoration={el.status&&'line-through'}>{title}</Text>
+          <Box display={"flex"} justifyContent={"space-between"} w={60}>
+          <Checkbox size={"lg"} isInvalid color="white" isChecked={el.status} onChange={async()=>
+    { await dispatch(updateTodos({...el,status:!el.status}));
+    await dispatch(getTodos());}} ></Checkbox>
+    <Text color="white" >{el.status? "Completed" :"Pending"}</Text>
+    {!el.status &&
+          <EditIcon w={8} h={8} color="white" onClick={()=>setState((prev)=>!prev)}/>
+    }
+          
+         
+          <DeleteIcon w={8} h={8} color="red" onClick={async()=>
+        { await dispatch(deleteTodos(el.id))
+       await dispatch(getTodos())}}/>
+         
+    </Box>
+   
+          </Box>
+          {state? <Edit title={title}  el={el} key={el.id}/> :""}
+        
+       
         </Box>
     </div>
   )
 }
 
 export default TodoItem
+
+

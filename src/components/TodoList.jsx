@@ -17,8 +17,8 @@ const TodoList = () => {
   return (
     <div>
         <Box marginTop={"20px"}>
-        {todos? todos?.map((el)=>
-        (<TodoItem {...el} />))
+        {todos.length!==0 ? todos?.map((el)=>
+        (<TodoItem key={el.id} {...el} />))
     :
     <Heading color={"white"}>Oops ! No data available</Heading>
     }

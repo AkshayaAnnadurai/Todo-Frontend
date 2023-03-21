@@ -16,11 +16,11 @@ export const addTodos=(todo)=>async(dispatch)=>{
 
 //GETTODOS function
 export const getTodos=()=>async(dispatch)=>{
+   
     dispatch({type:GET_TODOS_LOADING})
     try{
     let res=await axios.get("http://localhost:3000/todo")
     dispatch({type: GET_TODOS_SUCCESS,payload :res.data})
-    
     return res.data
     }
     catch(e)
@@ -51,7 +51,7 @@ export const deleteTodos=(id)=>async(dispatch)=>{
 export const updateTodos=(todo)=>async(dispatch)=>{
     dispatch({type:UPDATE_TODOS_LOADING})
     try{
-    let res=await axios.patch(`http://localhost:3000/todo/${todo.id}`,{...todo,status:!todo.status})
+    let res=await axios.patch(`http://localhost:3000/todo/${todo.id}`,{...todo})
     dispatch({type: UPDATE_TODOS_SUCCESS,payload :res.data})
     return res.data
     }

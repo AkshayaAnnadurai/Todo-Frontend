@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 const TodoInput= () => {
   const [text, setText] =useState(" ")
-  const[state,setState] =useState(false)
+ 
   const handleChange=(text)=>{
     setText(text)
     
@@ -21,8 +21,7 @@ const TodoInput= () => {
   isClosable: true,
   status: "error",
 });
-useEffect(()=>{
-},[state])
+
   return (
     <div>
       <InputGroup>
@@ -34,17 +33,16 @@ useEffect(()=>{
       onChange={(e)=>handleChange(e.currentTarget.value)}/>
       <Button 
       colorScheme="pink"
-      onClick={()=>{
-        if(text=="")
+      onClick={async()=>{
+        if(text.trim()=="")
         {
           toast()
           return
         }
-        dispatch(addTodos({title:text,status:false}));
-        setState((prev)=>!prev)
-        alert("Task Added Successfully")
+        await dispatch(addTodos({title:text,status:false}));
+       
      setText("")
-     dispatch(getTodos());}
+     await dispatch(getTodos());}
     }>Add</Button>
       </InputGroup>
     </div>
