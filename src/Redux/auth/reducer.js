@@ -65,7 +65,6 @@ import { AUTH_GETUSER_ERROR, AUTH_GETUSER_LOADING, AUTH_GETUSER_SUCCESS, AUTH_LO
         };
       }
     case AUTH_SIGNUP_SUCCESS: {
-        localStorage.setItem("token", payload.token);
         alert("Register Successful")
         return {
           ...state,

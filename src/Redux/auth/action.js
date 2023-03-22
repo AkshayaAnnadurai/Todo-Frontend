@@ -7,7 +7,7 @@ import { AUTH_GETUSER_ERROR, AUTH_GETUSER_LOADING, AUTH_GETUSER_SUCCESS, AUTH_LO
 export const loginAPI = (creds) => async (dispatch) => {
     dispatch({type:AUTH_LOGIN_LOADING})
   try {
-    let res = await axios.post("http://localhost:8000/users/login", creds);
+    let res = await axios.post("http://localhost:8080/login", creds);
     dispatch({
        
       type: AUTH_LOGIN_SUCCESS,
@@ -31,7 +31,7 @@ export const signupAPI = (creds) => async (dispatch) => {
   console.log("signupaction")
   dispatch({type:AUTH_SIGNUP_LOADING})
 try {
-  let res = await axios.post("http://localhost:8000/users/signup", creds);
+  let res = await axios.post("http://localhost:8080/users/signup", creds);
   dispatch({
      
     type: AUTH_SIGNUP_SUCCESS,
@@ -50,7 +50,7 @@ export const getuserAPI = () => async (dispatch) => {
   console.log("getuseraction")
   dispatch({type:AUTH_GETUSER_LOADING})
 try {
-  let res = await axios.get("http://localhost:8000/users/sign");
+  let res = await axios.get("http://localhost:8080/users");
   dispatch({
      
     type: AUTH_GETUSER_SUCCESS,

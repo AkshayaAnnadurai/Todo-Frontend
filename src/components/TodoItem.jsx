@@ -8,15 +8,14 @@ import Edit from './Edit'
 
 
 const TodoItem = ({...el}) => {
-    const[title,setTitle] =useState(el.title)
     const[state,setState]=useState(false)
    const dispatch=useDispatch()
-  console.log("el",el)
+
   return (
     <div >
         <Box marginTop={"20px"} >
           <Box display={"flex"} justifyContent={"space-between"}>
-          <Text color="white" textDecoration={el.status&&'line-through'}>{title}</Text>
+          <Text color="white" textDecoration={el.status&&'line-through'}>{el.title}</Text>
           <Box display={"flex"} justifyContent={"space-between"} w={60}>
           <Checkbox size={"lg"} isInvalid color="white" isChecked={el.status} onChange={async()=>
     { await dispatch(updateTodos({...el,status:!el.status}));
@@ -34,7 +33,7 @@ const TodoItem = ({...el}) => {
     </Box>
    
           </Box>
-          {state? <Edit title={title}  el={el} key={el.id}/> :""}
+          {state? <Edit setState={setState} title={el.title}  el={el} key={el.id}/> :""}
         
        
         </Box>
